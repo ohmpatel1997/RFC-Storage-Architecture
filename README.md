@@ -51,13 +51,22 @@ Output Key Length:
 
 - we gonna generated AES-256, so we would need a 32-byte (256-bit) key.
 
+### Account Recovery
 
+Currently the entire system relies on master password reliability. What if user lost/forgot his master password. In that case we need to have a recovery mechanism.
 
 
 
 ## Document Encryption/Decryption Model
 
 Each document that user uploads is being stored in a bucket. Bucket is a logical entry into server database and each bucket has its own encryption key associated with it. All documents that are being uploaded in this bucket is encrypted using this bucket's encryption key.
+
+This is achieved using a recovery key similar to `sym_key`. A user can enable account recovery which generates a recovery key. The recovery key is used to encrypt the user’s private data (i.e. private keys); this encrypted user data is stored on the server, along with a hash of the recovery key.
+
+- When a user requests account recovery, their identity is first verified through email. The server sends an email to the user containing a random six-digit passcode which they can use to prove access to their email account.
+- the user then enters their email, recovery key, and a new master password. The client hashes the recovery key, which is sent to the server.
+- The server checks if the hash matches the stored recovery key hash, and that the client retains the correct email code. If both match, the server sends the encrypted user data to the client, which then decrypts it with their recovery key.
+- The process is same again, user enters a new password, we generate a new key using argon2id, `sym_key_2`, we encrypt the user private key using `sym_key_2` and store it on server side.
 
 ### Bucket Types
 
