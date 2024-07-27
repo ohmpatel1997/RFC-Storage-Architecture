@@ -7,6 +7,7 @@ We have built a data storing service called as files. It is an end to end encryp
 This RFC focuses on designing the overall architectrure of the service which include:
 
 - Login Flow
+- Recovery Flow
 - Document Encryption/Decryption Model
 - Document Sharing Model
 
