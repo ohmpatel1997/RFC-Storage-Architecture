@@ -17,10 +17,43 @@ This RFC focuses on designing the overall architectrure of the service which inc
 - We use Argon2id to generate a symettric key from the given user's master password. Lets call this key as `sym_key`. This `sym_key` never leaves the browser. 
 - We generate the public/private key pairs and encrypt the private key using `sym_key`.
 
+
     We use user's `sym_key` to encrypt sensitive data associated with user's account; this encrypted data is called user's `encrypted_user_data`. This includes user's private keys but not his password. This encrypted information is stored by our server but can only be decrypted with user’s `sym_key`. The next time user logs in, user downloads his `encrypted_user_data` from the server, then decrypts the `encrypted_user_data` in-browser by using the `sym_key`. The `sym_key` never leaves the browser.
 
 
 In this system, user’s public keys are publicly visible, while his private keys are encrypted end-to-end. His password and `sym_key` are never stored, not even as encrypted data. user’s `sym_key` and password are also never sent over any network, even as encrypted data.
+
+### Argon2id Parameters
+
+When using Argon2id for key derivation, it's important to choose appropriate parameters to ensure security while maintaining reasonable performance. Below are some suggestions:
+
+Salt:
+- Use a cryptographically secure random number generator to create a unique salt for each user.
+- Salt length: At least 16 bytes (128 bits) is recommended. You could use 32 bytes for extra security.
+- we would store the salt information along side the user information on server, as it's needed for key derivation during login.
+
+Iteration Count:
+
+- This parameter determines how computationally intensive the operation is.
+- A typical range is 1-4 seconds on the target hardware.
+
+Memory Size:
+
+- Argon2id is designed to be memory-hard, so this is an important parameter.
+- Recommended minimum: 64 MiB (65536 KiB), we would use that.
+
+Parallelism Factor:
+
+- This should typically be set to the number of available CPU cores.
+- We would use 4, but it can be adjusted based on your target hardware.
+
+Output Key Length:
+
+- we gonna generated AES-256, so we would need a 32-byte (256-bit) key.
+
+
+
+
 
 ## Document Encryption/Decryption Model
 
