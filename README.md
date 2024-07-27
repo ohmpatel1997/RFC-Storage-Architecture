@@ -56,7 +56,7 @@ Output Key Length:
 Currently the entire system relies on master password reliability. What if user lost/forgot his master password. In that case we need to have a recovery mechanism.
 
 
-This is achieved using a recovery key similar to `sym_key`. A user can enable account recovery which generates a recovery key. The recovery key is used to encrypt the user’s private data (i.e. private keys); this encrypted user data is stored on the server, along with a hash of the recovery key.
+This is achieved using a recovery key similar to `sym_key`. A user can enable account recovery which generates a recovery key. The recovery key is used to encrypt the user’s private data (i.e. private keys); this encrypted user data is stored on the server, along with a hash of the recovery key. The recovery key is a 256-bit (32-byte) cryptographically secure random number, encoded into a 24-word mnemonic phrase using the BIP39 word list for easier user management and input.
 
 - When a user requests account recovery, their identity is first verified through email. The server sends an email to the user containing a random six-digit passcode which they can use to prove access to their email account.
 - the user then enters their email, recovery key, and a new master password. The client hashes the recovery key, which is sent to the server.
@@ -86,7 +86,8 @@ The model of the bucekt is looks something like below:
 
 Each bucket has its owner encryption key using which all documents of that bucket is encrypted and upload to IPFS. Our server does not store the bucket's encryption key directly but rather stores the encrypted version of the key.
 
-Owner generate a random cryptographically safe string while creating the bucket and encrypt it with owner's public key. This encrypted version of the key is being stored on the server.
+Owner generate a random cryptographically safe random key while creating the bucket and encrypt it with owner's public key. This encrypted version of the key is being stored on the server. We gonna use "AES-GCM" algorithm with 256 bits (32 bytes) for key generation.
+
 
 the basic model of the bucket is being shown below.
 
