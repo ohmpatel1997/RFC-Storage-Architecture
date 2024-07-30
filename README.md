@@ -6,8 +6,6 @@ We have built a data storing service called as files. It is an end to end encryp
 
 ## Scope
 
-# Scope of this RFC
-
 This RFC document outlines the proposed architecture for an end-to-end encrypted data storage service built on top of IPFS. The scope of this document includes:
 
 1. Login Flow and Account Recovery:
