@@ -4,7 +4,9 @@
 
 We have built a data storing service called as files. It is an end to end encrypted data storage service built on top of IPFS. The data in encrypted right into your browser before uploading to IPFS and only user can access their data.
 
-This RFC focuses on designing the overall architectrure of the service which include:
+## Scope
+
+This RFC focuses on designing the overall high level architectrure of the service which include:
 
 - Login Flow & Recovery Flow
 - Document Encryption/Decryption Model
