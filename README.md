@@ -6,11 +6,37 @@ We have built a data storing service called as files. It is an end to end encryp
 
 ## Scope
 
-This RFC focuses on designing the overall high level architectrure of the service which include:
+# Scope of this RFC
 
-- Login Flow & Recovery Flow
-- Document Encryption/Decryption Model
-- Document Sharing Model
+This RFC document outlines the proposed architecture for an end-to-end encrypted data storage service built on top of IPFS. The scope of this document includes:
+
+1. Login Flow and Account Recovery:
+   - User authentication process
+   - Account recovery mechanism
+
+2. Document Encryption/Decryption Model:
+   - Bucket-based storage system
+   - Bucket encryption key generation and management
+   - Document upload and download processes
+
+3. Document Sharing Model:
+   - Sharing flow between users
+   - Access control for shared buckets (readers and writers)
+
+4. Security Considerations:
+   - Key derivation parameters
+   - Encryption algorithms and their implementation
+   - Salt management
+
+This RFC aims to provide a comprehensive overview of the system's architecture, focusing on security and usability. It is intended for review by the development team, security experts, and other relevant stakeholders.
+
+Out of scope for this RFC:
+- Detailed UI/UX design
+- Specific IPFS implementation details
+- Server-side infrastructure beyond what's necessary for the encryption model
+- Performance optimizations and scalability considerations
+
+The goal of this RFC is to establish a solid foundation for the system's security model and core functionality. Implementation details, optimizations, and additional features may be addressed in future RFCs or during the development process.
 
 ## Login Flow
 
